@@ -1,26 +1,34 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+import type { MenuRoute } from '@/config/routes'
+import { routes } from '@/config/routes'
 import LoadingOrError from 'components/LoadingOrError'
 import Layout from 'layouts'
 import type { ReactElement } from 'react'
-import { lazy, Suspense } from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { Suspense } from 'react'
+import type { RouteObject } from 'react-router-dom'
+import { useRoutes } from 'react-router-dom'
 
-const DemoPage = lazy(async () => import('pages/demo'))
-const LoginPage = lazy(async () => import('pages/login'))
+function generateRouteConfig(menuRoutes: MenuRoute[]): RouteObject[] {
+	const result: RouteObject[] = []
+	for (const menuRouteItem of menuRoutes) {
+		const routeObjectItem: RouteObject = {}
+		routeObjectItem.path = menuRouteItem.path
+		const Element = menuRouteItem.component
+		routeObjectItem.element = (
+			<Suspense fallback={<LoadingOrError />}>
+				<Element />
+			</Suspense>
+		)
+		if (menuRouteItem.routes) {
+			routeObjectItem.children = generateRouteConfig(menuRouteItem.routes)
+		}
+		result.push(routeObjectItem)
+	}
+	return result
+}
 
 export default function App(): ReactElement {
-	return (
-		<BrowserRouter>
-			<Suspense fallback={<LoadingOrError />}>
-				<Layout>
-					<Routes>
-						<Route path='/' element={<DemoPage />} />
-						<Route path='/welcome' element={<div>welcome</div>} />
-						<Route path='/login' element={<LoginPage />} />
-					</Routes>
-				</Layout>
-				{/* <Routes>
-				</Routes> */}
-			</Suspense>
-		</BrowserRouter>
-	)
+	const configs = generateRouteConfig(routes)
+	const element = useRoutes(configs)
+	return <Layout>{element}</Layout>
 }

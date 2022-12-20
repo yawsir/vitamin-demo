@@ -1,85 +1,78 @@
-import { CrownFilled, SmileFilled, TabletFilled } from '@ant-design/icons'
+import { CrownFilled, SmileFilled } from '@ant-design/icons'
 import type { ProLayoutProps } from '@ant-design/pro-components'
+import { lazy } from 'react'
 
-const routes: ProLayoutProps['route'] = {
+export interface MenuRoute {
+	path: string
+	name: string
+	icon?: React.ReactNode | string
+	component: React.LazyExoticComponent<React.FC>
+	hideInMenu?: boolean
+	routes?: MenuRoute[]
+}
+
+export const routes: MenuRoute[] = [
+	{
+		path: '/dashboard',
+		name: '仪表盘',
+		icon: <SmileFilled />,
+		component: lazy(() => import('@/pages/dashboard'))
+	},
+	{
+		path: '/admin',
+		name: '管理页',
+		icon: <CrownFilled />,
+		component: lazy(() => import('@/pages/admin')),
+		routes: [
+			{
+				path: '/admin/sub-page1',
+				name: '一级页面',
+				icon: 'https://gw.alipayobjects.com/zos/antfincdn/upvrAjAPQX/Logo_Tech%252520UI.svg',
+				component: lazy(() => import('@/pages/admin/sub-page1'))
+			},
+			{
+				path: '/admin/sub-page2',
+				name: '二级页面',
+				icon: <CrownFilled />,
+				component: lazy(() => import('@/pages/admin/sub-page2'))
+			}
+		]
+	},
+	{
+		path: '/login',
+		name: '登录',
+		hideInMenu: true,
+		component: lazy(() => import('@/pages/login'))
+	}
+]
+
+const menuConfig: ProLayoutProps['route'] = {
 	route: {
 		path: '/',
 		routes: [
 			{
-				path: '/welcome',
-				name: '欢迎',
+				path: '/dashboard',
+				name: '仪表盘',
 				icon: <SmileFilled />,
-				component: './Welcome'
+				component: '@/pages/dashboard'
 			},
 			{
 				path: '/admin',
 				name: '管理页',
 				icon: <CrownFilled />,
-				access: 'canAdmin',
 				component: './Admin',
 				routes: [
 					{
 						path: '/admin/sub-page1',
 						name: '一级页面',
 						icon: 'https://gw.alipayobjects.com/zos/antfincdn/upvrAjAPQX/Logo_Tech%252520UI.svg',
-						component: './Welcome'
+						component: '@/pages/admin/sub-page1'
 					},
 					{
 						path: '/admin/sub-page2',
 						name: '二级页面',
 						icon: <CrownFilled />,
-						component: './Welcome'
-					},
-					{
-						path: '/admin/sub-page3',
-						name: '三级页面',
-						icon: <CrownFilled />,
-						component: './Welcome'
-					}
-				]
-			},
-			{
-				name: '列表页',
-				icon: <TabletFilled />,
-				path: '/list',
-				component: './ListTableList',
-				routes: [
-					{
-						path: '/list/sub-page',
-						name: '列表页面',
-						icon: <CrownFilled />,
-						routes: [
-							{
-								path: 'sub-sub-page1',
-								name: '一一级列表页面',
-								icon: <CrownFilled />,
-								component: './Welcome'
-							},
-							{
-								path: 'sub-sub-page2',
-								name: '一二级列表页面',
-								icon: <CrownFilled />,
-								component: './Welcome'
-							},
-							{
-								path: 'sub-sub-page3',
-								name: '一三级列表页面',
-								icon: <CrownFilled />,
-								component: './Welcome'
-							}
-						]
-					},
-					{
-						path: '/list/sub-page2',
-						name: '二级列表页面',
-						icon: <CrownFilled />,
-						component: './Welcome'
-					},
-					{
-						path: '/list/sub-page3',
-						name: '三级列表页面',
-						icon: <CrownFilled />,
-						component: './Welcome'
+						component: '@/pages/admin/sub-page1'
 					}
 				]
 			}
@@ -87,4 +80,4 @@ const routes: ProLayoutProps['route'] = {
 	}
 }
 
-export default routes
+export default menuConfig
