@@ -55,15 +55,6 @@
 		"@typescript-eslint/prefer-enum-initializers": "off",
 		"@typescript-eslint/prefer-readonly-parameter-types": "off",
 		"@typescript-eslint/prefer-regexp-exec": "off",
-		"@typescript-eslint/no-magic-numbers": [
-			"error",
-			{
-				"ignoreEnums": true,
-				"ignore": [0],
-				"enforceConst": true,
-				"detectObjects": true
-			}
-		],
 		"@typescript-eslint/explicit-module-boundary-types": "off",
 		"@typescript-eslint/init-declarations": "off",
 		"@typescript-eslint/no-confusing-void-expression": [
@@ -76,6 +67,11 @@
 		"@typescript-eslint/member-ordering": "off",
 		"@typescript-eslint/prefer-includes": "off",
 		"@typescript-eslint/no-restricted-imports": "off",
+		"@typescript-eslint/explicit-function-return-type": "off",
+		"@typescript-eslint/no-type-alias": "off",
+		"@typescript-eslint/promise-function-async": "off",
+		"@typescript-eslint/no-floating-promises": "off",
+		"@typescript-eslint/no-unnecessary-condition": "off",
 
 		"import/no-deprecated": "error",
 		"import/order": "off",
@@ -92,6 +88,7 @@
 				]
 			}
 		],
+		"import/extensions": "off",
 
 		"react/no-did-update-set-state": "off",
 		"react/no-find-dom-node": "off",
@@ -115,22 +112,7 @@
 				"validateNested": true
 			}
 		],
-		"react/function-component-definition": [
-			"error",
-			{
-				"namedComponents": "function-declaration"
-			}
-		],
-		"react/no-unstable-nested-components": "error",
-		"react/jsx-handler-names": [
-			"error",
-			{
-				"eventHandlerPrefix": "on",
-				"eventHandlerPropPrefix": "on",
-				"checkLocalVariables": true,
-				"checkInlineFunction": true
-			}
-		],
+		"react/function-component-definition": "off",
 		"react/jsx-key": "error",
 		"react/jsx-no-bind": [
 			"error",
@@ -145,6 +127,11 @@
 		"react/jsx-no-constructed-context-values": "error",
 		"react/jsx-no-script-url": "error",
 		"react/jsx-no-useless-fragment": "error",
+		"react/jsx-props-no-spreading": "off",
+		"jsx-a11y/no-static-element-interactions": "off",
+		"jsx-a11y/click-events-have-key-events": "off",
+		"react/no-unstable-nested-components": "off",
+		"react/prop-types": "off",
 
 		"unicorn/filename-case": [
 			"error",
@@ -179,7 +166,6 @@
 			"files": ["**/__tests__/**/*.ts?(x)"],
 			"extends": ["plugin:testing-library/react"],
 			"rules": {
-				"@typescript-eslint/no-magic-numbers": ["off"],
 				"testing-library/no-await-sync-events": [
 					"error",
 					{
